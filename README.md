@@ -16,8 +16,11 @@ A modular Deep Learning framework built from scratch using NumPy. Implements dif
 
 ## 📈 Future Roadmap
 Additions planned:
-- Regularisation: batch norm, spatial dropout for CNN
+- Examples: Classification (likely Titanic)
+- Activation: Softmax
+- Loss: Cross Entropy
 - Layers: CNN, RNN, LSTM
+- Regularisation: batch norm, spatial dropout for CNN
 - Optimisation: Adam
 - Training: decay
 
@@ -26,9 +29,11 @@ Additions planned:
 DeepNum/
 ├── deepnum/           # Core library
 │   ├── data/          # Data loading & preprocessing
-│   └── model/         # Architecture & Layer definitions
+│   ├── layers/        # Layer definitions
+│   ├── constructor.py # Model building
+│   ├── loss.py        # Loss functions
+│   └── optimiser.py   # Optimisers
 ├── examples/          # Demos & tutorials
-├── tests/             # Mathematical verification
 └── pyproject.toml     # Package configuration
 ```
 
