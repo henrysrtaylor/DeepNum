@@ -1,17 +1,28 @@
+"""Activation functions.
+
+Contains af_relu which applies ReLU or Leaky ReLU element-wise.
+Stores pre-activation values for gradient computation.
+"""
+
 import numpy as np
 
-class af_base():
+class _af_base():
     """
     A base class for activation functions in a neural network.
     """
     def __init__(self):
-        self.information = {"type": self.__class__.__name__, "parameters": hasattr(self, 'weights') or hasattr(self, 'bias')}   
+        self.training = True  # default: training mode
+        self.information = {"type": self.__class__.__name__, "parameters": hasattr(self, 'weights') or hasattr(self, 'bias')} 
+    def train(self):
+        self.training = True
+    def eval(self):
+        self.training = False
     def forward_pass(self):
         raise NotImplementedError("Functionality not implemented for class.")
     def backward_pass(self):
         raise NotImplementedError("Functionality not implemented for class.")
     
-class af_relu(af_base):
+class af_relu(_af_base):
     """
     ReLu activation function. 
     If leaky_mul set above 0 then leaky ReLu, else ReLu.

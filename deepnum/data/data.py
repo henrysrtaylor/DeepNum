@@ -1,3 +1,9 @@
+"""Data splitting, normalisation, and batching utilities.
+
+Provides train_test_val_split for partitioning data,
+NormaliseData for standardisation, and DataLoader for batching.
+"""
+
 import numpy as np
 
 def train_test_val_split(data:np.ndarray, label_feature:int, split_percent:list=[0.7, 0.15, 0.15], excludeList:list=[]) -> tuple:

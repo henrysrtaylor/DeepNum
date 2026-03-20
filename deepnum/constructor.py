@@ -1,11 +1,27 @@
+"""Model classes for building and running neural networks.
+
+Contains sequential_model which holds layers and handles forward/backward passes through the network.
+"""
+
 from typing import Callable
 
-class base_model():
+class _model_base():
     """
     Sequential model to hold layers and calculate forward and back passes.
     """
     def __init__(self, layers: list):
         self.layers = layers
+        self.training = True  # default: training mode
+    def train(self):
+        self.training = True
+        for layer in self.layers:
+            if hasattr(layer, "train"):
+                layer.train()
+    def eval(self):
+        self.training = False
+        for layer in self.layers:
+            if hasattr(layer, "eval"):
+                layer.eval()
     def forward_pass(self):
         raise NotImplementedError("Functionality not implemented for class.")
     def backward_pass(self):
@@ -18,7 +34,7 @@ class base_model():
             if hasattr(layer, 'inputs'):
                 delattr(layer, 'inputs')   
 
-class sequential_model(base_model):
+class sequential_model(_model_base):
     """
     Sequential model to hold layers and calculate forward and back passes.
     """

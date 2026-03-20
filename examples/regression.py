@@ -1,16 +1,22 @@
+"""Example: train a neural network on Boston housing data.
+
+Demonstrates loading data, building a model with linear layers, ReLU activation and dropout, then training with SGD.
+"""
+
 # import custom deep learning library
 from deepnum.data.data import train_test_val_split, NormaliseData, DataLoader
 from deepnum.data.loader import internet_loader
-from deepnum.model.model import sequential_model
-from deepnum.model.layers.layers import layer_linear
-from deepnum.model.layers.activation import af_relu
-from deepnum.model.loss import loss_mse
-from deepnum.model.optimiser import optimiser_sgd
+from deepnum.constructor import sequential_model
+from deepnum.layers.linear import layer_linear
+from deepnum.layers.activation import af_relu
+from deepnum.layers.regularisation import reg_dropout
+from deepnum.loss import loss_mse
+from deepnum.optimiser import optimiser_sgd
 
 # load data
 split_percent=[0.7, 0.15, 0.15]
 label_feature = 13 # index
-excludeList = []
+excludeList = [0, 1, 2, 3, 6, 8, 9, 11]  # keep: RM(5), NOX(4), DIS(7), PTRATIO(10), LSTAT(12)
 
 data = internet_loader("boston")
 X_train, y_train, X_test, y_test, X_val, y_val = train_test_val_split(data=data, label_feature=label_feature, split_percent=split_percent, excludeList=excludeList)
@@ -23,17 +29,21 @@ X_test = normaliser.transform(X_test)
 
 # setup network
 layers = [
-    layer_linear(13, 30),
+    layer_linear(X_train.shape[1], 20),
     af_relu(),
-    layer_linear(30, 1),
+    reg_dropout(0.1),
+    layer_linear(20, 20),
+    af_relu(),
+    reg_dropout(0.1),
+    layer_linear(20, 1),
 ]
 model = sequential_model(layers=layers)
 
 # training setup
-num_epochs = 100
+num_epochs = 200
 batch_size = 16
 loss = loss_mse()
-lr = 0.0001
+lr = 0.00001
 optimiser = optimiser_sgd(loss=loss, learning_rate=lr)
 
 # load data
@@ -43,6 +53,7 @@ test_dataloader = DataLoader(X_val, y_val)
 
 # Training iteration
 for i in range(num_epochs):  
+    model.train()
     train_loss_sum = 0.0 # sum of batch losses weighted by batch size
     train_sample_count = 0 # total samples seen this epoch
     
@@ -63,6 +74,7 @@ for i in range(num_epochs):
     # get validation predictions each epoch
     val_loss_sum = 0.0
     val_sample_count = 0 
+    model.eval()
     for X_val, y_val in val_dataloader:
         val_pred = model.forward_pass(X_val) 
         v_loss = loss.loss_value(val_pred, y_val)
@@ -77,7 +89,8 @@ for i in range(num_epochs):
     print(f"Epoch: {i+1} | Training Loss: {train_loss_avg:.4f} | Val Loss: {val_loss_avg:.4f}")
 
 test_loss_sum = 0.0
-test_sample_count = 0 
+test_sample_count = 0
+model.eval() 
 for X_test, y_test in test_dataloader:
     test_pred = model.forward_pass(X_test) 
     t_loss = loss.loss_value(test_pred, y_test)

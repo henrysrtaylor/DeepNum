@@ -1,3 +1,8 @@
+"""Functions for loading datasets from files or the internet.
+
+Provides csv_loader for local files and internet_loader for fetching common datasets like Boston housing.
+"""
+
 import numpy as np
 import os
 import requests
