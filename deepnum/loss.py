@@ -1,6 +1,11 @@
+"""Loss functions for training.
+
+Provides loss_mse (mean squared error) for regression tasks.
+"""
+
 import numpy as np
 
-class loss_base:
+class _loss_base:
     """
     A base class for loss functions.
     """
@@ -11,7 +16,10 @@ class loss_base:
     def grad(self):
         raise NotImplementedError("Functionality not implemented for class.")
     
-class loss_mse:
+class loss_mse(_loss_base):
+    def __init__(self):
+        super().__init__()
+        
     def check_shapes(self, y_pred, y):
         """Checks shapes of predictions and ground truth are consistant.
         

@@ -1,20 +1,30 @@
+"""Linear (fully connected) layers.
+
+Contains layer_linear which performs y = xW + b. Stores inputs for backprop.
+"""
+
 import numpy as np
 from typing import Callable
 
-class layer_base():
+class _layer_base():
     """
     A base class for layers in a neural network.
     """
     def __init__(self, num_nodes_input, num_nodes_output):
         self.num_input_node = num_nodes_input
         self.num_output_node = num_nodes_output
+        self.training = True  # default: training mode
         self.information = {"type": self.__class__.__name__, "parameters": hasattr(self, 'weights') or hasattr(self, 'bias')}
+    def train(self):
+        self.training = True
+    def eval(self):
+        self.training = False
     def forward_pass(self):
         raise NotImplementedError("Functionality not implemented for class.")
     def backward_pass(self):
         raise NotImplementedError("Functionality not implemented for class.")
     
-class layer_linear(layer_base):
+class layer_linear(_layer_base):
     """
     A linear layer in a neural network.
     """
