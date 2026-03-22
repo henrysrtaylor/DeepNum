@@ -87,7 +87,6 @@ class DataLoader:
         self.shuffle = shuffle
 
     def __iter__(self):
-        
         num_samples = self.X.shape[0]
         indices = np.arange(num_samples)
         if self.shuffle:
