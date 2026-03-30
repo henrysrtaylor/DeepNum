@@ -9,6 +9,7 @@ Designed with a modularity inspired by PyTorch and scikit-learn, the API will fe
 - Layers: Linear
 - Optimisation: SGD
 - Loss: Mean Squared Error
+- Activations: ReLu (+ Leaky), Softmax, Sigmoid
 - Backpropagation: Implementation via the chain-rule
 - Regularisation: Dropout layer
 - Data: CSV parser, internet data loading, train-test split, data normalisation, dataloader
@@ -17,13 +18,11 @@ Designed with a modularity inspired by PyTorch and scikit-learn, the API will fe
 ## 📈 Future Roadmap
 Additions planned:
 - Examples: Classification (likely Titanic)
-- Data: One-hot encoding
-- Activation: Softmax
 - Loss: Cross Entropy
 - Layers: CNN, RNN, LSTM
-- Regularisation: batch norm, spatial dropout for CNN
+- Regularisation: batch norm, spatial dropout layer for CNN
 - Optimisation: Adam
-- Training: decay
+- Training: Cosine decay
 
 ## 📂 Project Structure
 ```
