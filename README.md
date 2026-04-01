@@ -14,7 +14,7 @@ Designed with a modularity inspired by PyTorch and scikit-learn, the API will fe
 - Regularisation: Dropout layer
 - Data: CSV parser, internet data loading, train-test split, data normalisation, dataloader
 - Metrics: Accuracy
-- Examples: Regression (Boston Housing)
+- Examples: Regression (Boston Housing), Classificaion (Wine)
 
 ## 📈 Future Roadmap
 Additions planned:
