@@ -8,20 +8,21 @@ Designed with a modularity inspired by PyTorch and scikit-learn, the API will fe
 ## 📋 Core Components
 - Layers: Linear
 - Optimisation: SGD
-- Loss: Mean Squared Error
+- Loss: Mean Squared Error, Cross Entropy
 - Activations: ReLu (+ Leaky), Softmax, Sigmoid
 - Backpropagation: Implementation via the chain-rule
 - Regularisation: Dropout layer
 - Data: CSV parser, internet data loading, train-test split, data normalisation, dataloader
+- Metrics: Accuracy
 - Examples: Regression (Boston Housing)
 
 ## 📈 Future Roadmap
 Additions planned:
-- Examples: Classification (likely Titanic)
-- Loss: Cross Entropy
+- Metrics: Precision, Recall, F1, MSE, MAE, RMSE
+- Optimisation: Adam
+- Examples: Image Classification (MNIST)
 - Layers: CNN, RNN, LSTM
 - Regularisation: batch norm, spatial dropout layer for CNN
-- Optimisation: Adam
 - Training: Cosine decay
 
 ## 📂 Project Structure
