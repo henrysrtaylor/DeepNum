@@ -4,7 +4,8 @@ Demonstrates loading data, building a model with linear layers, ReLU activation 
 """
 
 # import custom deep learning library
-from deepnum.data.data import train_test_val_split, NormaliseData, DataLoader
+from deepnum.data.data import train_test_val_split, DataLoader
+from deepnum.data.transformations import NormaliseData
 from deepnum.data.loader import internet_loader
 from deepnum.constructor import sequential_model
 from deepnum.layers.linear import layer_linear
@@ -13,16 +14,20 @@ from deepnum.layers.regularisation import reg_dropout
 from deepnum.loss import loss_mse
 from deepnum.optimiser import optimiser_sgd
 
+# transformations
+normaliser = NormaliseData()
+
 # load data
 split_percent=[0.7, 0.15, 0.15]
-label_feature = 13 # index
+label_feature = 13  # index
 excludeList = [0, 1, 2, 3, 6, 8, 9, 11]  # keep: RM(5), NOX(4), DIS(7), PTRATIO(10), LSTAT(12)
 
 data = internet_loader("boston")
-X_train, y_train, X_test, y_test, X_val, y_val = train_test_val_split(data=data, label_feature=label_feature, split_percent=split_percent, excludeList=excludeList)
+y = data[:, label_feature].reshape(-1, 1)
+X = data[:, [i for i in range(data.shape[1]) if i not in excludeList + [label_feature]]]
+X_train, y_train, X_test, y_test, X_val, y_val = train_test_val_split(X, y, split_percent=split_percent)
 
 # normalise data
-normaliser = NormaliseData()
 X_train = normaliser.fit_transform(X_train)
 X_val = normaliser.transform(X_val)
 X_test = normaliser.transform(X_test)
