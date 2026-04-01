@@ -12,9 +12,9 @@ Designed with a modularity inspired by PyTorch and scikit-learn, the API will fe
 - Activations: ReLu (+ Leaky), Softmax, Sigmoid
 - Backpropagation: Implementation via the chain-rule
 - Regularisation: Dropout layer
-- Data: CSV parser, internet data loading, train-test split, data normalisation, dataloader
+- Data: CSV parser, internet data loading, train-test split, data normalisation, dataloader, one-hot encoding
 - Metrics: Accuracy
-- Examples: Regression (Boston Housing), Classificaion (Wine)
+- Examples: Regression (Boston Housing), Classification (Wine)
 
 ## 📈 Future Roadmap
 Additions planned:
@@ -33,6 +33,7 @@ DeepNum/
 │   ├── layers/        # Layer definitions
 │   ├── constructor.py # Model building
 │   ├── loss.py        # Loss functions
+│   ├── metrics.py     # Evaluation metrics
 │   └── optimiser.py   # Optimisers
 ├── examples/          # Examples using DeepNum package
 └── pyproject.toml     # Package configuration
