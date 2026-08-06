@@ -3,7 +3,7 @@
 Provides optimiser_sgd (stochastic gradient descent) which computes gradients via the loss function and updates weights.
 """
 
-class optimiser_sgd():
+class OptimiserBase():
     """
     Operates on model to update weights based on loss function.
     """

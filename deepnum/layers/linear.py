@@ -6,7 +6,7 @@ Contains layer_linear which performs y = xW + b. Stores inputs for backprop.
 import numpy as np
 from typing import Callable
 
-class _layer_base():
+class LayerBase():
     """
     A base class for layers in a neural network.
     """
@@ -24,7 +24,7 @@ class _layer_base():
     def backward_pass(self):
         raise NotImplementedError("Functionality not implemented for class.")
     
-class layer_linear(_layer_base):
+class LayerLinear(LayerBase):
     """
     A linear layer in a neural network.
     """

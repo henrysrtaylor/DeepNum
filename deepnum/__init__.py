@@ -1,6 +1,6 @@
 from . import data
 from . import layers
 from . import metrics
-from .constructor import sequential_model
-from .loss import loss_mse, loss_cross_entropy
-from .optimiser import optimiser_sgd
+from .constructor import SequentialModel
+from .loss import LossMse, LossCrossEntropy
+from .optimiser import OptimiserBase
