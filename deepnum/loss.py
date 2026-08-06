@@ -18,7 +18,7 @@ def _check_shapes(y_pred, y):
     if y_pred.shape != y.shape:
         raise ValueError(f"Shape mismatch: y_pred shape {y_pred.shape} != y shape {y.shape}")
 
-class _loss_base:
+class LossBase:
     """
     A base class for loss functions.
     """
@@ -27,7 +27,7 @@ class _loss_base:
     def grad(self):
         raise NotImplementedError("Functionality not implemented for class.")
 
-class loss_cross_entropy(_loss_base):
+class LossCrossEntropy(LossBase):
     """
     Cross entropy loss for multi-class classification (takes raw logits).
     *DO NOT USE SOFTMAX LAYER IF USING THIS LOSS FUNCTION*
@@ -100,7 +100,7 @@ class loss_cross_entropy(_loss_base):
         exp_z = np.exp(z_stable)  # now safe: max value is exp(0) = 1
         return exp_z / np.sum(exp_z, axis=1, keepdims=True)  # (B, C) probabilities summing to 1
 
-class loss_mse(_loss_base):
+class LossMse(LossBase):
     """
     Loss mean squared error for regression.
     Example:

@@ -5,7 +5,7 @@ Contains reg_dropout which randomly zeros activations during training to reduce 
 
 import numpy as np
 
-class _reg_base():
+class RegBase():
     """
     A base class for regularisation functions in a neural network.
     """
@@ -21,7 +21,7 @@ class _reg_base():
     def backward_pass(self):
         raise NotImplementedError("Functionality not implemented for class.")
 
-class reg_dropout(_reg_base):
+class RegDropout(RegBase):
     """
     Dropout layer acting on inputs to randomly drop activations from previous layer for regularisation.
     """
