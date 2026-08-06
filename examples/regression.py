@@ -7,12 +7,12 @@ Demonstrates loading data, building a model with linear layers, ReLU activation 
 from deepnum.data.data import train_test_val_split, DataLoader
 from deepnum.data.transformations import NormaliseData
 from deepnum.data.loader import internet_loader
-from deepnum.constructor import sequential_model
-from deepnum.layers.linear import layer_linear
-from deepnum.layers.activation import af_relu
-from deepnum.layers.regularisation import reg_dropout
-from deepnum.loss import loss_mse
-from deepnum.optimiser import optimiser_sgd
+from deepnum.constructor import SequentialModel
+from deepnum.layers.linear import LayerLinear
+from deepnum.layers.activation import AfRelu
+from deepnum.layers.regularisation import RegDropout
+from deepnum.loss import LossMse
+from deepnum.optimiser import OptimiserBase
 
 # transformations
 normaliser = NormaliseData()
@@ -34,22 +34,22 @@ X_test = normaliser.transform(X_test)
 
 # setup network
 layers = [
-    layer_linear(X_train.shape[1], 20),
-    af_relu(),
-    reg_dropout(0.1),
-    layer_linear(20, 20),
-    af_relu(),
-    reg_dropout(0.1),
-    layer_linear(20, 1),
+    LayerLinear(X_train.shape[1], 20),
+    AfRelu(),
+    RegDropout(0.1),
+    LayerLinear(20, 20),
+    AfRelu(),
+    RegDropout(0.1),
+    LayerLinear(20, 1),
 ]
-model = sequential_model(layers=layers)
+model = SequentialModel(layers=layers)
 
 # training setup
 num_epochs = 200
 batch_size = 16
-loss = loss_mse()
+loss = LossMse()
 lr = 0.00001
-optimiser = optimiser_sgd(loss=loss, learning_rate=lr)
+optimiser = OptimiserBase(loss=loss, learning_rate=lr)
 
 # load data
 train_dataloader = DataLoader(X_train, y_train, batch_size=batch_size, shuffle=True)
