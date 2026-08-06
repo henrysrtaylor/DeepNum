@@ -5,7 +5,7 @@ Contains sequential_model which holds layers and handles forward/backward passes
 
 from typing import Callable
 
-class _model_base():
+class ModelBase():
     """
     Sequential model to hold layers and calculate forward and back passes.
     """
@@ -34,7 +34,7 @@ class _model_base():
             if hasattr(layer, 'inputs'):
                 delattr(layer, 'inputs')   
 
-class sequential_model(_model_base):
+class SequentialModel(ModelBase):
     """
     Sequential model to hold layers and calculate forward and back passes.
     """

@@ -6,7 +6,7 @@ Stores outputs/inputs for gradient computation during backpropagation.
 
 import numpy as np
 
-class _af_base():
+class AfBase():
     """
     A base class for activation functions in a neural network.
     """
@@ -22,7 +22,7 @@ class _af_base():
     def backward_pass(self):
         raise NotImplementedError("Functionality not implemented for class.")
 
-class af_relu(_af_base):
+class AfRelu(AfBase):
     """
     ReLu activation function. 
     If leaky_mul set above 0 then leaky ReLu, else ReLu.
@@ -56,7 +56,7 @@ class af_relu(_af_base):
         dY = error_signal # (B, out_dim)
         return mask * dY # element-wise (B, out_dim)
     
-class af_softmax(_af_base):
+class AfSoftmax(AfBase):
     """
     Softmax activation function. 
     """
@@ -89,7 +89,7 @@ class af_softmax(_af_base):
         new_error_signal = s * (dY - sum_term)
         return new_error_signal
     
-class af_sigmoid(_af_base):
+class AfSigmoid(AfBase):
     """
     Sigmoid activation function. 
     """
