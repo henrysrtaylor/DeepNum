@@ -1,15 +1,16 @@
 """Example: train a neural network on Boston housing data.
 
-Demonstrates loading data, building a model with linear layers, ReLU activation and dropout, then training with SGD.
+Demonstrates loading data, building a model with linear layers, ReLU activation and
+dropout, then training with SGD.
 """
 
 # import custom deep learning library
-from deepnum.data.data import train_test_val_split, DataLoader
-from deepnum.data.transformations import NormaliseData
-from deepnum.data.loader import internet_loader
 from deepnum.constructor import SequentialModel
-from deepnum.layers.linear import LayerLinear
+from deepnum.data.data import DataLoader, train_test_val_split
+from deepnum.data.loader import internet_loader
+from deepnum.data.transformations import NormaliseData
 from deepnum.layers.activation import AfRelu
+from deepnum.layers.linear import LayerLinear
 from deepnum.layers.regularisation import RegDropout
 from deepnum.loss import LossMse
 from deepnum.optimiser import OptimiserBase
@@ -18,14 +19,25 @@ from deepnum.optimiser import OptimiserBase
 normaliser = NormaliseData()
 
 # load data
-split_percent=[0.7, 0.15, 0.15]
+split_percent = [0.7, 0.15, 0.15]
 label_feature = 13  # index
-excludeList = [0, 1, 2, 3, 6, 8, 9, 11]  # keep: RM(5), NOX(4), DIS(7), PTRATIO(10), LSTAT(12)
+excludeList = [
+    0,
+    1,
+    2,
+    3,
+    6,
+    8,
+    9,
+    11,
+]  # keep: RM(5), NOX(4), DIS(7), PTRATIO(10), LSTAT(12)
 
 data = internet_loader("boston")
 y = data[:, label_feature].reshape(-1, 1)
 X = data[:, [i for i in range(data.shape[1]) if i not in excludeList + [label_feature]]]
-X_train, y_train, X_test, y_test, X_val, y_val = train_test_val_split(X, y, split_percent=split_percent)
+X_train, y_train, X_test, y_test, X_val, y_val = train_test_val_split(
+    X, y, split_percent=split_percent
+)
 
 # normalise data
 X_train = normaliser.fit_transform(X_train)
@@ -57,31 +69,31 @@ val_dataloader = DataLoader(X_val, y_val)
 test_dataloader = DataLoader(X_val, y_val)
 
 # Training iteration
-for i in range(num_epochs):  
+for i in range(num_epochs):
     model.train()
-    train_loss_sum = 0.0 # sum of batch losses weighted by batch size
-    train_sample_count = 0 # total samples seen this epoch
-    
+    train_loss_sum = 0.0  # sum of batch losses weighted by batch size
+    train_sample_count = 0  # total samples seen this epoch
+
     for X_train, y_train in train_dataloader:
         # forward to get loss
         train_pred = model.forward_pass(X_train)
         train_batch_loss = loss.loss_value(train_pred, y_train)
-        
-        B_train = X_train.shape[0] # batch size
+
+        B_train = X_train.shape[0]  # batch size
         train_loss_sum += train_batch_loss * B_train
         train_sample_count += B_train
 
         # backward to get gradients and update weights
         optimiser.backward_pass(model, train_pred, y_train)
 
-        model.zero_grad() # zero grad to reset for next batch
-    
+        model.zero_grad()  # zero grad to reset for next batch
+
     # get validation predictions each epoch
     val_loss_sum = 0.0
-    val_sample_count = 0 
+    val_sample_count = 0
     model.eval()
     for X_val, y_val in val_dataloader:
-        val_pred = model.forward_pass(X_val) 
+        val_pred = model.forward_pass(X_val)
         v_loss = loss.loss_value(val_pred, y_val)
 
         val_size = X_val.shape[0]
@@ -91,13 +103,16 @@ for i in range(num_epochs):
     train_loss_avg = train_loss_sum / max(1, train_sample_count)
     val_loss_avg = val_loss_sum / max(1, val_sample_count)
 
-    print(f"Epoch: {i+1} | Training Loss: {train_loss_avg:.4f} | Val Loss: {val_loss_avg:.4f}")
+    print(
+        f"Epoch: {i + 1} | Training Loss: {train_loss_avg:.4f}"
+        f" | Val Loss: {val_loss_avg:.4f}"
+    )
 
 test_loss_sum = 0.0
 test_sample_count = 0
-model.eval() 
+model.eval()
 for X_test, y_test in test_dataloader:
-    test_pred = model.forward_pass(X_test) 
+    test_pred = model.forward_pass(X_test)
     t_loss = loss.loss_value(test_pred, y_test)
 
     test_size = X_test.shape[0]
