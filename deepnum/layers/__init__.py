@@ -1,3 +1,5 @@
+from .activation import AfRelu, AfSigmoid, AfSoftmax
 from .linear import LayerLinear
-from .activation import AfRelu, AfSoftmax, AfSigmoid
 from .regularisation import RegDropout
+
+__all__ = ["AfRelu", "AfSigmoid", "AfSoftmax", "LayerLinear", "RegDropout"]
