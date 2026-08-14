@@ -41,28 +41,51 @@ DeepNum/
 
 ## 🚀 Getting Started
 
-### 1. Clone the Repository
-Open your terminal and run:
+### 1. Install Requirements
+
+You need Python 3.10 or later, Git, and [uv](https://docs.astral.sh/uv/).
+
+Install uv on Windows:
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+Install uv on Linux or macOS:
+
 ```bash
-git clone "https://github.com/henrysrtaylor/DeepNum.git"
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+### 2. Clone the Repository
+
+Open your terminal and run:
+
+```bash
+git clone https://github.com/henrysrtaylor/DeepNum.git
 cd DeepNum
 ```
 
-### 2. Set Up Virtual Environment
-Windows:
-```
-python -m venv venv
-.\venv\Scripts\activate
+### 3. Install Dependencies
+
+From the project root, create or update the local virtual environment and install DeepNum and its dependencies:
+
+```bash
+uv sync
 ```
 
-mac/linux:
-```
-python3 -m venv venv
-source venv/bin/activate
+Activate the virtual environment if you want to run commands directly inside it.
+
+Windows PowerShell:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
 ```
 
-### 3. Install Library
-Make sure you are in project root then:
+Linux or macOS:
+
+```bash
+source .venv/bin/activate
 ```
-pip install -e .
-```
+
+Alternatively, prefix commands with `uv run` without activating the environment.
